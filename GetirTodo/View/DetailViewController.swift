@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
                 uppdateCoreData(idString: selectedId!.uuidString, subTitle: DescriptionTextField.text ,title: TitleTextField.text)
             }
             
-            NotificationCenter.default.post(name: NSNotification.Name("newPlace"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name("newObject"), object: nil)
 
             navigationController?.popViewController(animated: true)
         }else{

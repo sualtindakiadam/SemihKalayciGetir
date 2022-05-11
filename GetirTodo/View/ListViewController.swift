@@ -13,13 +13,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
      
     @IBOutlet weak var ListTableView: UITableView!
     
-    var titleArray = [String]()
+    /*var titleArray = [String]()
     var idArray = [UUID]()
-    var doneArray = [Bool]()
+    var doneArray = [Bool]()*/
     var choosenTitle = ""
     var choosenId : UUID?
-    
-    
+
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDo")
     
@@ -31,39 +30,43 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         ListTableView.delegate = self
         ListTableView.dataSource = self
         
-
+        
+        
         getData()
+
+        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-           NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newPlace"), object: nil )
+           NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newObject"), object: nil )
        }
     
     @objc func getData(){
-        request.returnsObjectsAsFaults = false
+   request.returnsObjectsAsFaults = false
 
         
         do{
             let results = try context.fetch(self.request)
             
             if results.count > 0 {
-                self.titleArray.removeAll(keepingCapacity: false)
-                self.idArray.removeAll(keepingCapacity: false)
-                self.doneArray.removeAll(keepingCapacity: false)
+                titleArray.removeAll(keepingCapacity: false)
+                idArray.removeAll(keepingCapacity: false)
+                doneArray.removeAll(keepingCapacity: false)
 
                 
                 for result in results as! [NSManagedObject]{
                     if let title = result.value(forKey: "title") as? String{
-                        self.titleArray.append(title)
+                        titleArray.append(title)
                         
                     }
                     
                     if let id = result.value(forKey: "id") as? UUID{
-                        self.idArray.append(id)
+                        idArray.append(id)
                         
                     }
                     if let done = result.value(forKey: "done") as? Bool{
-                        self.doneArray.append(done)
+                        doneArray.append(done)
                         
                     }
                     
@@ -78,6 +81,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("error")
         }
     }
+
+    
     
     @objc func addButtonClicked(){
         choosenTitle = ""
@@ -94,6 +99,18 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.TitleLabelinCell.text = titleArray[indexPath.row]
         cell.DoneSwitch.isOn = doneArray[indexPath.row]
         cell.idLabel.text = idArray[indexPath.row].uuidString
+        
+        if doneArray[indexPath.row] == true{
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: cell.TitleLabelinCell.text!)
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            
+            
+            cell.TitleLabelinCell.attributedText = attributeString
+            
+            cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.gray : UIColor.black
+        }
+        
+        
         return cell
     }
     

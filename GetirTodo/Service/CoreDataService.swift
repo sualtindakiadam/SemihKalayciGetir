@@ -12,6 +12,9 @@ import UIKit
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDo")
 
+var titleArray = [String]()
+var idArray = [UUID]()
+var doneArray = [Bool]()
 
 func uppdateCoreData(doneState : Bool? = nil, idString : String, subTitle : String? = nil, title : String? = nil){
 
@@ -142,6 +145,50 @@ func deleteCoreDataObject( id : UUID){
         
     }
     
+    
+}
+
+
+func getAllCoreData(){
+    
+    request.returnsObjectsAsFaults = false
+
+     
+     do{
+         let results = try context.fetch(request)
+         
+         if results.count > 0 {
+             titleArray.removeAll(keepingCapacity: false)
+             idArray.removeAll(keepingCapacity: false)
+             doneArray.removeAll(keepingCapacity: false)
+
+             
+             for result in results as! [NSManagedObject]{
+                 if let title = result.value(forKey: "title") as? String{
+                     titleArray.append(title)
+                     
+                 }
+                 
+                 if let id = result.value(forKey: "id") as? UUID{
+                     idArray.append(id)
+                     
+                 }
+                 if let done = result.value(forKey: "done") as? Bool{
+                     doneArray.append(done)
+                     
+                 }
+                 
+                /* let myCustomViewController: ListViewController = ListViewController(nibName: nil, bundle: nil)
+                 let getThatValue = myCustomViewController.ListTableView.reloadData()
+                 */
+                 
+             }
+         }
+         
+         
+     }catch{
+         print("error")
+     }
     
 }
     

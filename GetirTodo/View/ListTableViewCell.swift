@@ -29,11 +29,29 @@ class ListTableViewCell: UITableViewCell {
     
     @IBAction func DoneSwitchChanged(_ sender: Any) {
         
-        print(idLabel.text)
+        
         if DoneSwitch.isOn == true{
+            
+            
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: TitleLabelinCell.text!)
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            
+            
+            TitleLabelinCell.attributedText = attributeString
+            
+
+            TitleLabelinCell.textColor = UIColor.gray
             uppdateCoreData(doneState: true, idString: idLabel.text!)
             
         }else{
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: TitleLabelinCell.text!)
+            attributeString.addAttribute(NSAttributedString.Key.attachment, value: 2, range: NSMakeRange(0, attributeString.length))
+            TitleLabelinCell.attributedText = attributeString
+
+            
+            
+            TitleLabelinCell.textColor = UIColor.black 
+
             uppdateCoreData(doneState: false, idString: idLabel.text!)
 
 
