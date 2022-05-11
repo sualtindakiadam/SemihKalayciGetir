@@ -115,51 +115,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-               
-               
-               do{
-                   let results = try context.fetch(self.request)
-                   
-                   if results.count > 0 {
-                       
-                       for result in results as! [NSManagedObject]{
-                           
-                           if let id = result.value(forKey: "id") as? UUID{
-                               if id == idArray[indexPath.row] {
-                                   context.delete(result)
-                                   titleArray.remove(at: indexPath.row)
-                                   idArray.remove(at: indexPath.row)
-                                   doneArray.remove(at: indexPath.row)
-                                   self.ListTableView.reloadData()
-                                   
-                                   do{
-                                       try context.save()
-                                       
-                                   }catch{
-                                       print("delete error")
-                                       
-                                   }
-                                   
-                                   break
-                                   
-                               }
-                               
-                           }
-                           
-                           
-                       }
-                       
-                   }
-                   
-                   
-                   
-                   
-               }catch{
-                   
-               }
-              
-               
-               
+            
+            deleteCoreDataObject(id: idArray[indexPath.row])
+            titleArray.remove(at: indexPath.row)
+            idArray.remove(at: indexPath.row)
+            doneArray.remove(at: indexPath.row)
+            self.ListTableView.reloadData()
            }
     }
 }

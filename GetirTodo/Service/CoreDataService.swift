@@ -100,3 +100,49 @@ func getCoreDataObject (idString : String) -> [String]{
     
     return response
 }
+
+func deleteCoreDataObject( id : UUID){
+    
+    
+    do{
+        let results = try context.fetch(request)
+        
+        if results.count > 0 {
+            
+            for result in results as! [NSManagedObject]{
+                
+                if let id = result.value(forKey: "id") as? UUID{
+                    if id == id {
+                        context.delete(result)
+                   
+                        
+                        do{
+                            try context.save()
+                            
+                        }catch{
+                            print("delete error")
+                            
+                        }
+                        
+                        break
+                        
+                    }
+                    
+                }
+                
+                
+            }
+            
+        }
+        
+        
+        
+        
+    }catch{
+        
+    }
+    
+    
+}
+    
+

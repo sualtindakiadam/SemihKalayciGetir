@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         let saveOrUpdateBtton = UIBarButtonItem(title: selectedTitle == "" ? "Save" : "Update" , style: .done, target: self, action: #selector(saveOrUpdateBttonPressed))
-                navigationItem.rightBarButtonItem = saveOrUpdateBtton
+            navigationItem.rightBarButtonItem = saveOrUpdateBtton
         
         if selectedId != nil {
             
