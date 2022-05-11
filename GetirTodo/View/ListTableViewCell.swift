@@ -44,8 +44,8 @@ class ListTableViewCell: UITableViewCell {
             uppdateCoreData(doneState: true, idString: idLabel.text!)
             
         }else{
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: TitleLabelinCell.text!)
-            attributeString.addAttribute(NSAttributedString.Key.attachment, value: 2, range: NSMakeRange(0, attributeString.length))
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string:  (TitleLabelinCell.text)!)
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
             TitleLabelinCell.attributedText = attributeString
 
             
