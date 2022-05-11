@@ -43,7 +43,7 @@ func uppdateCoreData(doneState : Bool? = nil, idString : String, subTitle : Stri
         try context.save()
 
     }catch{
-        print("error")
+        print("error  uppdateCoreData")
     }
 }
 
@@ -61,7 +61,7 @@ func saveNewCoreData( title : String, subTitle : String? = ""){
         print("Success")
 
     }catch{
-        print("Error!")
+        print("Error! saveNewCoreData")
         
     }
 }
@@ -96,8 +96,8 @@ func getCoreDataObject (idString : String) -> [String]{
             }
         }
     }catch{
-        print("error")
-        
+        print("error getCoreDataObject")
+
     }
     
     return response
@@ -136,68 +136,17 @@ func deleteCoreDataObject( id : UUID, indexPathRow : Int){
                         }
                         
                         break
-                        
                     }
-                    
                 }
-                
-                
             }
             
         }
-        
-        
-        
-        
+    
     }catch{
-        
+       print("error DeleteCoreObject")
     }
     
     
 }
 
-
-func getAllCoreData(){
-    
-    request.returnsObjectsAsFaults = false
-
-     
-     do{
-         let results = try context.fetch(request)
-         
-         if results.count > 0 {
-             titleArray.removeAll(keepingCapacity: false)
-             idArray.removeAll(keepingCapacity: false)
-             doneArray.removeAll(keepingCapacity: false)
-
-             
-             for result in results as! [NSManagedObject]{
-                 if let title = result.value(forKey: "title") as? String{
-                     titleArray.append(title)
-                     
-                 }
-                 
-                 if let id = result.value(forKey: "id") as? UUID{
-                     idArray.append(id)
-                     
-                 }
-                 if let done = result.value(forKey: "done") as? Bool{
-                     doneArray.append(done)
-                     
-                 }
-                 
-                /* let myCustomViewController: ListViewController = ListViewController(nibName: nil, bundle: nil)
-                 let getThatValue = myCustomViewController.ListTableView.reloadData()
-                 */
-                 
-             }
-         }
-         
-         
-     }catch{
-         print("error")
-     }
-    
-}
-    
 

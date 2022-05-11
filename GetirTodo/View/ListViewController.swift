@@ -99,6 +99,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.idLabel.text = idArray[indexPath.row].uuidString
         
         cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.gray : UIColor.black
+        
+
 
         
         
