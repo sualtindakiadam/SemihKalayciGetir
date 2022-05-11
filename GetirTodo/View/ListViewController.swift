@@ -13,9 +13,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
      
     @IBOutlet weak var ListTableView: UITableView!
     
-    /*var titleArray = [String]()
-    var idArray = [UUID]()
-    var doneArray = [Bool]()*/
+
     var choosenTitle = ""
     var choosenId : UUID?
 
@@ -100,15 +98,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.DoneSwitch.isOn = doneArray[indexPath.row]
         cell.idLabel.text = idArray[indexPath.row].uuidString
         
-        if doneArray[indexPath.row] == true{
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: cell.TitleLabelinCell.text!)
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            
-            
-            cell.TitleLabelinCell.attributedText = attributeString
-            
-            cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.gray : UIColor.black
-        }
+        cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.gray : UIColor.black
+
         
         
         return cell
@@ -133,11 +124,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             
-            deleteCoreDataObject(id: idArray[indexPath.row])
-            titleArray.remove(at: indexPath.row)
-            idArray.remove(at: indexPath.row)
-            doneArray.remove(at: indexPath.row)
-            self.ListTableView.reloadData()
+            deleteCoreDataObject(id: idArray[indexPath.row], indexPathRow : indexPath.row)
+           getData()
+            ListTableView.reloadData()
            }
     }
 }

@@ -33,56 +33,20 @@ class ListTableViewCell: UITableViewCell {
         if DoneSwitch.isOn == true{
             
             
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: TitleLabelinCell.text!)
+            /*let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: TitleLabelinCell.text!)
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            
-            
-            TitleLabelinCell.attributedText = attributeString
-            
 
+            TitleLabelinCell.attributedText = attributeString*/
             TitleLabelinCell.textColor = UIColor.gray
             uppdateCoreData(doneState: true, idString: idLabel.text!)
             
         }else{
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string:  (TitleLabelinCell.text)!)
+            /*let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string:  (TitleLabelinCell.text)!)
             attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
-            TitleLabelinCell.attributedText = attributeString
-
-            
-            
+            TitleLabelinCell.attributedText = attributeString*/
             TitleLabelinCell.textColor = UIColor.black 
-
             uppdateCoreData(doneState: false, idString: idLabel.text!)
-
-
         }
-        
     }
-    
-   /* func uppdateState(state : Bool){
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDo")
-        request.returnsObjectsAsFaults = false
-
-        let idSting = idLabel.text
-        request.predicate = NSPredicate(format: "id = %@", idSting!)
-       
-        do
-        {
-            let result = try context.fetch(request)
-            if let objectUpdate = result.first as? NSManagedObject{
-                objectUpdate.setValue(state, forKey: "done")
-    
-            }
-            
-            try context.save()
-    
-        }catch{
-            print("error")
-        }
-    }*/
-    
-    
-  
     
 }

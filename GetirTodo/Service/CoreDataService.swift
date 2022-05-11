@@ -75,8 +75,7 @@ func getCoreDataObject (idString : String) -> [String]{
 
     
     do
-    {
-        let results = try context.fetch(request)
+    {        let results = try context.fetch(request)
         if results.count > 0 {
             for result in results as! [NSManagedObject] {
                 
@@ -104,9 +103,13 @@ func getCoreDataObject (idString : String) -> [String]{
     return response
 }
 
-func deleteCoreDataObject( id : UUID){
+func deleteCoreDataObject( id : UUID, indexPathRow : Int){
     
+    request.returnsObjectsAsFaults = false
+    request.predicate = NSPredicate(format: "id = %@", id.uuidString)
     
+    print(request)
+
     do{
         let results = try context.fetch(request)
         
@@ -120,7 +123,12 @@ func deleteCoreDataObject( id : UUID){
                    
                         
                         do{
+                            titleArray.remove(at: indexPathRow)
+                            idArray.remove(at: indexPathRow)
+                            doneArray.remove(at: indexPathRow)
+                           
                             try context.save()
+                           
                             
                         }catch{
                             print("delete error")
