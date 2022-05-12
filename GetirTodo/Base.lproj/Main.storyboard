@@ -17,8 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ToDo list is empty. Click plus button to add." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QzN-Z8-A96">
+                                <rect key="frame" x="20" y="421" width="374" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGray5Color"/>
+                                <color key="highlightedColor" systemColor="systemGray5Color"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ccM-4w-S0u">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableCell" rowHeight="60" id="mu7-7e-Rhc" customClass="ListTableViewCell" customModule="GetirTodo" customModuleProvider="target">
@@ -74,10 +81,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ccM-4w-S0u" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="NBu-N2-A87"/>
-                            <constraint firstItem="ccM-4w-S0u" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Uva-tq-cV4"/>
-                            <constraint firstItem="ccM-4w-S0u" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bvj-V8-SGT"/>
-                            <constraint firstItem="ccM-4w-S0u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hAk-9R-f2e"/>
+                            <constraint firstItem="ccM-4w-S0u" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DT4-2s-Aac"/>
+                            <constraint firstItem="ccM-4w-S0u" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Njd-G4-UVf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ccM-4w-S0u" secondAttribute="bottom" id="YhD-r6-mUF"/>
+                            <constraint firstItem="ccM-4w-S0u" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="exZ-RI-MV8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SwY-LL-2gb"/>
@@ -103,26 +110,42 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mD0-9j-083">
-                                <rect key="frame" x="20" y="194" width="374" height="34"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NRG-N1-JJW">
+                                <rect key="frame" x="20" y="195" width="374" height="628"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enF-cN-Pd7">
+                                <rect key="frame" x="20" y="831" width="374" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Delete">
+                                    <color key="baseForegroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="DeleteButtonClicked:" destination="CUV-tM-cm5" eventType="touchUpInside" id="Ah5-wP-yYA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WdC-1a-xp4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="leading" secondItem="Fbm-9q-VuT" secondAttribute="leadingMargin" id="3dS-JW-6uP"/>
-                            <constraint firstItem="mD0-9j-083" firstAttribute="top" secondItem="tnC-x8-EwZ" secondAttribute="bottom" constant="20" id="4Ze-Iq-yWB"/>
-                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="top" secondItem="WdC-1a-xp4" secondAttribute="top" constant="52" id="8wr-FS-dyY"/>
-                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="trailing" secondItem="Fbm-9q-VuT" secondAttribute="trailingMargin" id="Pcx-R6-AU9"/>
-                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="trailing" secondItem="mD0-9j-083" secondAttribute="trailing" id="XlW-NP-aeS"/>
-                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="leading" secondItem="mD0-9j-083" secondAttribute="leading" id="iJ4-TG-qxx"/>
+                            <constraint firstItem="NRG-N1-JJW" firstAttribute="leading" secondItem="enF-cN-Pd7" secondAttribute="leading" id="1hn-tn-S8J"/>
+                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="leading" secondItem="NRG-N1-JJW" secondAttribute="leading" id="2nk-Y7-VY8"/>
+                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="top" secondItem="WdC-1a-xp4" secondAttribute="top" constant="52" id="7IH-P5-xDs"/>
+                            <constraint firstItem="enF-cN-Pd7" firstAttribute="bottom" secondItem="WdC-1a-xp4" secondAttribute="bottom" id="MNM-xc-QbI"/>
+                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="trailing" secondItem="NRG-N1-JJW" secondAttribute="trailing" id="W8d-wl-UXN"/>
+                            <constraint firstItem="NRG-N1-JJW" firstAttribute="trailing" secondItem="enF-cN-Pd7" secondAttribute="trailing" id="WD8-mo-mR4"/>
+                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="trailing" secondItem="Fbm-9q-VuT" secondAttribute="trailingMargin" id="flD-j9-qAf"/>
+                            <constraint firstItem="NRG-N1-JJW" firstAttribute="top" secondItem="tnC-x8-EwZ" secondAttribute="bottom" constant="21" id="lcr-GD-M5V"/>
+                            <constraint firstItem="enF-cN-Pd7" firstAttribute="top" secondItem="NRG-N1-JJW" secondAttribute="bottom" constant="8" id="tXY-Ab-DEZ"/>
+                            <constraint firstItem="tnC-x8-EwZ" firstAttribute="leading" secondItem="Fbm-9q-VuT" secondAttribute="leadingMargin" id="w2g-4V-bJU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9Za-Cx-f7U"/>
                     <connections>
-                        <outlet property="DescriptionTextField" destination="mD0-9j-083" id="JkL-Kk-cWf"/>
+                        <outlet property="DeleteButton" destination="enF-cN-Pd7" id="ACh-QV-XUP"/>
+                        <outlet property="DescriptionTextView" destination="NRG-N1-JJW" id="N1X-0Y-4pM"/>
                         <outlet property="TitleTextField" destination="tnC-x8-EwZ" id="wH5-iM-4Ba"/>
                     </connections>
                 </viewController>
@@ -150,11 +173,17 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

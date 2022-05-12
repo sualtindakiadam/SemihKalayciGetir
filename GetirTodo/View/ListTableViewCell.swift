@@ -31,7 +31,7 @@ class ListTableViewCell: UITableViewCell {
         
         
         if DoneSwitch.isOn == true{
-            TitleLabelinCell.textColor = UIColor.gray
+            TitleLabelinCell.textColor = UIColor.systemGreen
              uppdateCoreData(doneState: true, idString: idLabel.text!)
             
         }else{

@@ -16,6 +16,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var choosenTitle = ""
     var choosenId : UUID?
+    var choosenIndexPath = 0
+
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDo")
@@ -28,12 +30,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         ListTableView.delegate = self
         ListTableView.dataSource = self
         
-        
-        
         getData()
-
-        
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +45,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             let results = try context.fetch(self.request)
             
             if results.count > 0 {
+                ListTableView.isHidden = false
+
                 titleArray.removeAll(keepingCapacity: false)
                 idArray.removeAll(keepingCapacity: false)
                 doneArray.removeAll(keepingCapacity: false)
@@ -72,6 +71,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     
                 }
+            }else if results.count == 0{
+                ListTableView.isHidden = true
             }
             
             
@@ -97,19 +98,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.TitleLabelinCell.text = titleArray[indexPath.row]
         cell.DoneSwitch.isOn = doneArray[indexPath.row]
         cell.idLabel.text = idArray[indexPath.row].uuidString
-        
-        cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.gray : UIColor.black
-        
+        cell.TitleLabelinCell.textColor = doneArray[indexPath.row] == true ? UIColor.systemGreen : UIColor.black
 
-
-        
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         choosenTitle = titleArray[indexPath.row]
         choosenId = idArray[indexPath.row]
+        choosenIndexPath = indexPath.row
         performSegue(withIdentifier: "toDetail", sender: nil)
     }
     
@@ -119,6 +116,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             let destinationVC = segue.destination as! DetailViewController
             destinationVC.selectedId = choosenId
             destinationVC.selectedTitle = choosenTitle
+            destinationVC.selectedIndexPathRow = choosenIndexPath
         }
     }
     

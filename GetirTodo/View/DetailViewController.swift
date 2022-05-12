@@ -11,10 +11,12 @@ import CoreData
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var TitleTextField: UITextField!
-    @IBOutlet weak var DescriptionTextField: UITextField!
+    @IBOutlet weak var DescriptionTextView: UITextView!
+    @IBOutlet weak var DeleteButton: UIButton!
     
     var selectedTitle = ""
     var selectedId : UUID?
+    var selectedIndexPathRow = 0
     
     
     override func viewDidLoad() {
@@ -22,28 +24,38 @@ class DetailViewController: UIViewController {
         
         let saveOrUpdateBtton = UIBarButtonItem(title: selectedTitle == "" ? "Save" : "Update" , style: .done, target: self, action: #selector(saveOrUpdateBttonPressed))
             navigationItem.rightBarButtonItem = saveOrUpdateBtton
+        DescriptionTextView.layer.borderWidth = 1
+        DescriptionTextView.layer.cornerRadius = 5
+        DescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
         
         if selectedId != nil {
             
             var data = getCoreDataObject(idString: selectedId!.uuidString)
             TitleTextField.text = data[0]
-            DescriptionTextField.text = data[1]
+            DescriptionTextView.text = data[1]
+            DeleteButton.isHidden = false
             
         }
     }
     
+    @IBAction func DeleteButtonClicked(_ sender: Any) {
+        
+        deleteCoreDataObject(id: selectedId!, indexPathRow : selectedIndexPathRow)
+        doneGoBack()
+
+    }
+    
+    
     @objc func saveOrUpdateBttonPressed(){
         if TitleTextField.text != ""{
             if selectedId == nil{
-                saveNewCoreData(title: TitleTextField.text!, subTitle: DescriptionTextField.text)
+                saveNewCoreData(title: TitleTextField.text!, subTitle: DescriptionTextView.text)
             }else{
                 
-                uppdateCoreData(idString: selectedId!.uuidString, subTitle: DescriptionTextField.text ,title: TitleTextField.text)
+                uppdateCoreData(idString: selectedId!.uuidString, subTitle: DescriptionTextView.text ,title: TitleTextField.text)
             }
             
-            NotificationCenter.default.post(name: NSNotification.Name("newObject"), object: nil)
-
-            navigationController?.popViewController(animated: true)
+            doneGoBack()
         }else{
             errrAlert(title: "Error !", message: "Title can not be empty")
         }
@@ -54,5 +66,13 @@ class DetailViewController: UIViewController {
         let cancleBtn = UIAlertAction(title: "Cancle", style: UIAlertAction.Style.cancel)
         alert.addAction(cancleBtn)
         self.present(alert, animated:true, completion: nil)
+    }
+    
+    func doneGoBack(){
+        
+        NotificationCenter.default.post(name: NSNotification.Name("newObject"), object: nil)
+
+        navigationController?.popViewController(animated: true)
+        
     }
 }
