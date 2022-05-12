@@ -27,7 +27,7 @@ class ListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func DoneSwitchChanged(_ sender: Any) {
+    @IBAction func DoneSwitchChanged(_ sender: Any) { // Liste elemanlarını Done yada UnDone yapmak için kullanılır
         
         
         if DoneSwitch.isOn == true{

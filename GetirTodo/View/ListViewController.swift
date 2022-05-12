@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {//UITableViewDelegate, UITableViewDataSource TableView için eklenmesi gerekir
 
      
     @IBOutlet weak var ListTableView: UITableView!
@@ -22,7 +22,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDo")
     
-    override func viewDidLoad() {
+    override func viewDidLoad() { // ilk açılış ayarları ve işlemlerini burda yaparız
         super.viewDidLoad()
         
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonClicked))
@@ -33,11 +33,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         getData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) { // sayfaya geri dönüldüğünde bulunan listenin ve table view ın güncellenmesi için kullanırız
            NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name("newObject"), object: nil )
        }
     
-    @objc func getData(){
+    @objc func getData(){ // Listeyi dolduran fonksiyondur
    request.returnsObjectsAsFaults = false
 
         
@@ -83,16 +83,16 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     
     
-    @objc func addButtonClicked(){
+    @objc func addButtonClicked(){ // + butonuna tıklandığında Detay sayfasını açar
         choosenTitle = ""
         performSegue(withIdentifier: "toDetail", sender: "add")
         
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // Table Eleman sayısı
         return titleArray.count
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { // CustomCell ile veri eşleştirme
         let cell = ListTableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! ListTableViewCell
         
         cell.TitleLabelinCell.text = titleArray[indexPath.row]
@@ -103,7 +103,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {// table satırlarından birine tıklandığında yapılacak işlemler
         choosenTitle = titleArray[indexPath.row]
         choosenId = idArray[indexPath.row]
         choosenIndexPath = indexPath.row
@@ -111,7 +111,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {// sayfalar arası geçiş ve veri aktarımı
         if segue.identifier == "toDetail" && sender == nil {
             let destinationVC = segue.destination as! DetailViewController
             destinationVC.selectedId = choosenId
@@ -122,6 +122,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        //table satırının kaydırma işlemi ile silme fonksiyonunun çalışmasını sağlar
         if editingStyle == .delete{
             
             deleteCoreDataObject(id: idArray[indexPath.row], indexPathRow : indexPath.row)

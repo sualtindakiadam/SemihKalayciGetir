@@ -28,7 +28,7 @@ class DetailViewController: UIViewController {
         DescriptionTextView.layer.cornerRadius = 5
         DescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
         
-        if selectedId != nil {
+        if selectedId != nil { // eğer id boş deilse liste ekranından geldiği anlaşılır ve alanlar doldurularak delete butonu aktif hale getirilir
             
             var data = getCoreDataObject(idString: selectedId!.uuidString)
             TitleTextField.text = data[0]
@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
     }
     
     
-    @objc func saveOrUpdateBttonPressed(){
+    @objc func saveOrUpdateBttonPressed(){ // ekranın sağ üstünde bulunan tek bir buton vardır. bu buton list ekranından gelinen amaca göre değişir. örneğin veri ile gelindiyse update işlemi yapacaktır ve o şekilde çalışırken + butonu ile yeni kayıt için gelindiyse yeni kayıt fonksiyonuna yönlendirir
         if TitleTextField.text != ""{
             if selectedId == nil{
                 saveNewCoreData(title: TitleTextField.text!, subTitle: DescriptionTextView.text)
@@ -61,14 +61,14 @@ class DetailViewController: UIViewController {
         }
     }
 
-    func errrAlert(title:String,message:String){
+    func errrAlert(title:String,message:String){ // title boş olma durumunda alert vermek için bu fonksiyon çalıştırılır
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         let cancleBtn = UIAlertAction(title: "Cancle", style: UIAlertAction.Style.cancel)
         alert.addAction(cancleBtn)
         self.present(alert, animated:true, completion: nil)
     }
     
-    func doneGoBack(){
+    func doneGoBack(){// bir işlem yapıldıktan sonra liste ekranına dönülüp willAppear ı tetikler
         
         NotificationCenter.default.post(name: NSNotification.Name("newObject"), object: nil)
 

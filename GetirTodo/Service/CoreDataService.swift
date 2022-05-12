@@ -16,14 +16,14 @@ var titleArray = [String]()
 var idArray = [UUID]()
 var doneArray = [Bool]()
 
-func uppdateCoreData(doneState : Bool? = nil, idString : String, subTitle : String? = nil, title : String? = nil){
+func uppdateCoreData(doneState : Bool? = nil, idString : String, subTitle : String? = nil, title : String? = nil){// farklı seneryo koşullarında da kullanılacağı için id harici olanlar optional olarak bırakılmıştır
 
     request.returnsObjectsAsFaults = false
-    request.predicate = NSPredicate(format: "id = %@", idString)
+    request.predicate = NSPredicate(format: "id = %@", idString) // id üzerinden işlem yapacağımız kayıt bulunur
     do
     {
         let result = try context.fetch(request)
-        if let objectUpdate = result.first as? NSManagedObject{
+        if let objectUpdate = result.first as? NSManagedObject{// sadece done durumu düzenlenme ihtimali olduğu için ağrı fonksiyonlar yazmak yerine boş gelme durumlarına göre kayıt üstünde güncellemeler yapılır
             
             if doneState != nil {
                 objectUpdate.setValue(doneState, forKey: "done")
@@ -47,7 +47,7 @@ func uppdateCoreData(doneState : Bool? = nil, idString : String, subTitle : Stri
     }
 }
 
-func saveNewCoreData( title : String, subTitle : String? = ""){
+func saveNewCoreData( title : String, subTitle : String? = ""){// yeni data title ve subTitle verisi alınır otomatik olarak bir id ile varsayılan olarak done false olarak kaydedilir
     let newToDo = NSEntityDescription.insertNewObject(forEntityName: "ToDo", into: context)
     
     newToDo.setValue(title, forKey: "title")
@@ -69,7 +69,7 @@ func saveNewCoreData( title : String, subTitle : String? = ""){
 func getCoreDataObject (idString : String) -> [String]{
     
 
-    request.predicate = NSPredicate(format: "id = %@", idString)
+    request.predicate = NSPredicate(format: "id = %@", idString)//id referansı ile kayıt bulunur ve return edilir
     request.returnsObjectsAsFaults = false
     var response : [String] = []
 
@@ -106,7 +106,7 @@ func getCoreDataObject (idString : String) -> [String]{
 func deleteCoreDataObject( id : UUID, indexPathRow : Int){
     
     request.returnsObjectsAsFaults = false
-    request.predicate = NSPredicate(format: "id = %@", id.uuidString)
+    request.predicate = NSPredicate(format: "id = %@", id.uuidString)//id referansı ile kayıt bulunur ve remove edilir
     
     print(request)
 
